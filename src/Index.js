@@ -13,6 +13,7 @@ const express = require("express");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 const userRouter = require("./router/users");
+const orgRouter = require("./router/organizations");
 
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser())
 
 app.use("/users", userRouter);
+app.use("/orgs", orgRouter);
 
 const port = process.env.PORT || 4000;
 

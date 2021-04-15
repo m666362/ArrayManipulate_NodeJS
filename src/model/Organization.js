@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const userSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -9,10 +9,10 @@ const userSchema = new mongoose.Schema({
     },
     balance: {
         type: Number,
-        default: 0,
+        default: 0
     }
 }, { timestamps: true }).plugin(require('mongoose-autopopulate'))
 
-const User = mongoose.model("users", userSchema)
+const Model = mongoose.model("organizations", schema)
 
-module.exports = User;
+module.exports = Model;
