@@ -8,3 +8,14 @@
 // 5. db.users.find().pretty() or any correct function
 
 require('./db/mongoose')
+const express = require("express");
+
+
+var router = express();
+router.use(express.json());
+
+const port = process.env.PORT || 3000;
+
+router.listen(port, () => {
+    console.log("listening at port 3000!!!");
+});
