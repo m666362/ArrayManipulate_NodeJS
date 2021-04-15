@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/Index.js",
   "scripts": {
-    "start": "nodemon index",
-    "dev": "nodemon ./Playground/play.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "play": "nodemon ./Playground/play.js"
   },
   "author": "Md Rayhan",
   "license": "ISC",
