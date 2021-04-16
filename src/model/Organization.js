@@ -13,6 +13,6 @@ const schema = new mongoose.Schema({
     }
 }, { timestamps: true }).plugin(require('mongoose-autopopulate'))
 
-const Model = mongoose.model("organizations", schema)
+const Model = mongoose.model("orgs", schema)
 
 module.exports = Model;

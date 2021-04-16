@@ -2,6 +2,7 @@ var express = require("express");
 var router = new express.Router();
 
 const Model = require("./../model/User");
+const Tran = require("./../model/Transaction");
 
 var bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -20,6 +21,64 @@ router.post('/', urlencodedParser, async (req, res) => {
         res.send(e)
     }
 })
+
+
+const findDonations = async (user) => {
+
+    user = mongoose.Types.ObjectId(user)
+    const tran = await Tran.aggregate([
+
+        {
+            $match: {
+                user: user,
+            }
+        },
+        {
+            $lookup: {
+                from: "orgs",
+                localField: "org",
+                foreignField: "_id",
+                as: "org"
+            }
+        },
+        {
+            $unwind: "$org"
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "user"
+            }
+        },
+        {
+            $unwind: "$user"
+        },
+        {
+            $project: {
+                _id: "$_id",
+                donar: "$user.name",
+                orgName: "$org.name",
+                date: "$date",
+                balance: "$amount"
+            }
+        }
+    ]);
+    let length = tran.length;
+    return tran[length-1];
+};
+
+router.get("/lastDonation/:id", urlencodedParser, async (req, res) => {
+    try {
+        const user = req.params.id;
+        const trans = await findDonations(user);
+        res.send(trans);
+    } catch (e) {
+        console.log(e)
+        res.send(e);
+    }
+});
 
 router.get('/',  async (req, res) => {
     try {
